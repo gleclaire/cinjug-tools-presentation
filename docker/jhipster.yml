@@ -1,0 +1,41 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+version: '3.x'
+services:
+  sample_project_jhipster:
+    image: jhipster/jhipster:v8.0.0
+    platform: linux/amd64
+#    platform: linux/$ARCH
+    container_name: sample_project_jhipster
+    environment:
+#      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=dev,api-docs
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://sample_project_postgres:5432/postgres
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_LIQUIBASE_URL=jdbc:postgresql://sample_project_postgres:5432/postgres
+#      - JHIPSTER_CACHE_REDIS_CLUSTER=false
+#       - JHIPSTER_CACHE_REDIS_CLUSTER=true
+#      - SPRING_DATA_URIS=http://sample_project_elasticsearch:9200
+      - JHIPSTER_SLEEP=5 # gives time for other services to boot before the application
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+      - AWS_REGION=${AWS_DEFAULT_REGION}
+      - AWS_EMAIL_HOST=${AWS_EMAIL_HOST}
+      - AWS_EMAIL_PORT=${AWS_EMAIL_PORT}
+      - AWS_EMAIL_USER=${AWS_EMAIL_USER}
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    uts: "host"
+    volumes:
+      - $JHIPSTER_PROJECT:/home/jhipster/app
+      - $HOME/.m2:/home/jhipster/.m2
+    ports:
+#      - 127.0.0.1:8080:8080
+      - 127.0.0.1:3000:3000
+      - 127.0.0.1:3001:3001
+      - 127.0.0.1:5005:5005
+      - 127.0.0.1:9000:9000
+#      - 127.0.0.1:9060:9060
+

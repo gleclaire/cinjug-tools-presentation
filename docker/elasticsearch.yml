@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+    sample_project_elasticsearch:
+        image: elasticsearch:2.4.6-alpine
+        platform: linux/amd64
+        container_name: sample_project_elasticsearch
+        # volumes:
+        #     - ~/volumes/jhipster/sample_project/elasticsearch/:/usr/share/elasticsearch/data/
+        ports:
+            - 9200:9200
+            - 9301:9300

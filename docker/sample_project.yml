@@ -1,0 +1,29 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+version: '3.8'
+services:
+    sample_project_app:
+        image: 721713825911.dkr.ecr.us-east-2.amazonaws.com/qa-sample_project:latest
+#        image: sample_project:test
+        container_name: sample_project_app
+        platform: linux/amd64
+        environment:
+#            - SPRING_PROFILES_ACTIVE=dev,api-docs,no-liquibase
+#            - SPRING_PROFILES_ACTIVE=dev,no-liquibase
+            - SPRING_PROFILES_ACTIVE=qa,api-docs,no-liquibase
+            - JHIPSTER_SLEEP=5 # gives time for other services to boot before the application
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+            - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+            - AWS_REGION=${AWS_DEFAULT_REGION}
+            - AWS_EMAIL_HOST=${AWS_EMAIL_HOST}
+            - AWS_EMAIL_PORT=${AWS_EMAIL_PORT}
+            - AWS_EMAIL_USER=${AWS_EMAIL_USER}
+            - AWS_EMAIL_PASSWORD=${AWS_EMAIL_PASSWORD}
+#            - SPRING_DATA_URIS=http://host.docker.internal:9301
+            - JAVA_OPTS=-Xms1024m -Xmx1024m -noverify -XX:+AlwaysPreTouch -Djava.security.egd=file:/dev/./urandom -Dspring.data.elasticsearch.cluster-nodes=host.docker.internal:9301
+
+        # If you want to expose these ports outside your dev PC,
+        # remove the "127.0.0.1:" prefix
+        ports:
+            - 127.0.0.1:8080:8080
